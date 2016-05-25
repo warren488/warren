@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngCordova'])
 
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -62,8 +63,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
       position: latLng
   });
 
+  //Display messaging indicating where user is, and
+  var contentString = '<b>Here You Are</b></br>' + latLng;
+
   var infoWindow = new google.maps.InfoWindow({
-      content: "Here You Are!"
+      content: contentString
   });
 
   google.maps.event.addListener(marker, 'click', function () {
