@@ -38,6 +38,13 @@ app.run(function($ionicPlatform) {
     url: '/sms',
     templateUrl: 'templates/sms.html',
     controller: 'SMSController',
+  })
+
+
+  .state('emergency', {
+    url: '/emg',
+    templateUrl: 'templates/emergency-tab.html',
+    //controller: 'SMSController',
   });
 
   $urlRouterProvider.otherwise("/map");
