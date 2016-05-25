@@ -46,11 +46,9 @@ app.run(function($ionicPlatform) {
 app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
 
-console.log('hi');
 
-  $scope.gotoURL = function(path){
-    console.log('test');
-  };
+
+
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
