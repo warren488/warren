@@ -38,63 +38,121 @@ app.run(function($ionicPlatform) {
     url: '/sms',
     templateUrl: 'templates/sms.html',
     controller: 'SMSController',
+  })
+  
+  .state('emergency', {
+    url: '/emg',
+    templateUrl: 'templates/emergency-tab.html',
+    //controller: 'SMSController',
+  })
+
+
+  .state('services', {
+    url: '/ser',
+    templateUrl: 'templates/services.html',
+    //controller: 'SMSController',
   });
 
   $urlRouterProvider.otherwise("/map");
 
 })
-app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
-  var options = {timeout: 10000, enableHighAccuracy: true};
+app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaSms) {
+    var options = {timeout: 10000, enableHighAccuracy: true};
 
 
 
 
 
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
 
 
-    var mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      var mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+      //Wait until the map is loaded
+      google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+
+    var marker = new google.maps.Marker({
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        position: latLng
+    });
+
+    var infoWindow = new google.maps.InfoWindow({
+        content: "Here You Are!"
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.open($scope.map, marker);
+    });
+
+  });
+    }, function(error){
+      console.log("Could not get location");
+    });
+    $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+        var lat  = position.coords.latitude
+        var long = position.coords.longitude
+
+        $scope.sms={
+        number: 12462415241,
+        message: "Put GPS coordinates here for https://www.google.com/maps/@" + lat + "," + long + ",15z"
     };
+      }, function(err) {
+        // error
+        console.log("Could not get location");
+      });
 
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+       //ignore console.log($scope.sms.message);
 
-    //Wait until the map is loaded
-    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+      //actual sms send function
+    $scope.sendSMS = function() {
+        console.log($scope.sms.message);
+      $cordovaSms
+        .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
+        .then(function() {
+          console.log('Success');
+          alert('Success');
+          // Success! SMS was sent
+        }, function(error) {
+          console.log('Error');
+          alert('Error');
+          // An error occurred
+        });
+    }
 
-  var marker = new google.maps.Marker({
-      map: $scope.map,
-      animation: google.maps.Animation.DROP,
-      position: latLng
-  });
-
-  var infoWindow = new google.maps.InfoWindow({
-      content: "Here You Are!"
-  });
-
-  google.maps.event.addListener(marker, 'click', function () {
-      infoWindow.open($scope.map, marker);
-  });
-
-});
-  }, function(error){
-    console.log("Could not get location");
-  });
 });
 
 /*var app = angular.module('starter', ['ionic', 'ngCordova'])*/
 
 //Controller to handle SMS
-app.controller('SMSController', function($scope, $cordovaSms) {
-  $scope.sms={
+app.controller('SMSController', function($scope, $cordovaGeolocation, $cordovaSms) {
+//  $scope.sms={
+//      number: 12462415241,
+//      message: "Put GPS coordinates here for https://www.google.com/maps/"
+//  };
+var options = {timeout: 10000, enableHighAccuracy: true};
+ $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+      var lat  = position.coords.latitude
+      var long = position.coords.longitude
+      
+      $scope.sms={
       number: 12462415241,
-      message: "Put GPS coordinates here for https://www.google.com/maps/"
+      message: "Put GPS coordinates here for https://www.google.com/maps/@" + lat + "," + long + ",15z"
   };
+    }, function(err) {
+      // error
+      console.log("Could not get location");
+    });
+    
   document.addEventListener("deviceready", function() {
 
   var options = {
