@@ -27,36 +27,21 @@ app.run(function($ionicPlatform) {
 
   $stateProvider
   .state('map', {
-    url: '/map',
+    url: '/',
     templateUrl: 'templates/map.html',
-    controller: 'MapCtrl',
-
-
-  })
-
-  .state('sms', {
-    url: '/sms',
-    templateUrl: 'templates/sms.html',
-    controller: 'SMSController',
+    controller: 'MapCtrl'
   });
 
-  $urlRouterProvider.otherwise("/map");
+
+  $urlRouterProvider.otherwise("/");
 
 })
 app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
 
-console.log('hi');
-
-  $scope.gotoURL = function(path){
-    console.log('test');
-  };
-
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-
 
     var mapOptions = {
       center: latLng,
@@ -66,28 +51,12 @@ console.log('hi');
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    //Wait until the map is loaded
-    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-
-  var marker = new google.maps.Marker({
-      map: $scope.map,
-      animation: google.maps.Animation.DROP,
-      position: latLng
-  });
-
-  var infoWindow = new google.maps.InfoWindow({
-      content: "Here You Are!"
-  });
-
-  google.maps.event.addListener(marker, 'click', function () {
-      infoWindow.open($scope.map, marker);
-  });
-
-});
   }, function(error){
     console.log("Could not get location");
   });
 });
+
+/*var app = angular.module('starter', ['ionic', 'ngCordova'])*/
 
 //Controller to handle SMS
 app.controller('SMSController', function($scope, $cordovaSms) {
