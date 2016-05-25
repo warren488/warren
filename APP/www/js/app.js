@@ -87,6 +87,8 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   });
 });
 
+/*var app = angular.module('starter', ['ionic', 'ngCordova'])*/
+
 //Controller to handle SMS
 app.controller('SMSController', function($scope, $cordovaSms) {
   $scope.sms={
