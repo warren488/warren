@@ -113,7 +113,7 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
 
        //ignore console.log($scope.sms.message);
 
-       $scope.DclickA = function() {
+      /* $scope.DclickA = function() {
          $scope.showPopup = function() {
            $scope.data = {};
            var myPopup = $ionicPopup.show('double tap to send sms');
@@ -127,7 +127,7 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
          };
 
          alert('double tap to send sms');
-       }
+       }*/
 
       //actual sms send function
     $scope.sendSMS = function() {
