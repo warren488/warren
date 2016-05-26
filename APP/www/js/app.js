@@ -208,6 +208,9 @@ var options = {timeout: 10000, enableHighAccuracy: true};
 
 
     }
+    
+    
+    
 /*<<<<<<< HEAD
 
    //actual sms send function
@@ -233,19 +236,53 @@ var options = {timeout: 10000, enableHighAccuracy: true};
 
  //actual sms send function
   $scope.sendSMS = function() {
-    alert('trigered');
+     
+    try { 
+        if($scope.sms.number == null) { 
+            throw "Empty.";
+        } 
+        else if(isNaN($scope.sms.number)) { 
+            throw "not a number.";
+        }
+        else if($scope.sms.number.toString().length > 15){
+            throw "too long to be a registered number.";
+        }
+        
+        else if($scope.sms.number.toString().length > 3 && $scope.sms.number.toString().length < 11){
+            throw "incomplete. Please input full 11 digit number including area code";
+        }
+                    
+        else if($scope.sms.number.toString().length < 3) { 
+            throw "too short to be a registered number.";
+        }
+        else
+        {
+            $cordovaSms
+            .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
+            .then(function() {
+              console.log('Success');
+              alert('Success');
+                // Success! SMS was sent
+            }, function(error) {
+                console.log('Error');
+                alert('Error');
+                // An error occurred
+            });
+        }
+    }
+    catch(err) {
+        alert( "Input is " + err);
+    }
+    
+    finally {
+        var smsNum = smsService.getNum();
+        $scope.sms={
+            number: smsNum,
+            message: $scope.sms.message
+        };
+    }
 
-    $cordovaSms
-      .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
-      .then(function() {
-        console.log('Success');
-        alert('Success');
-        // Success! SMS was sent
-      }, function(error) {
-        console.log('Error');
-        alert('Error');
-        // An error occurred
-      });
+    
   }
 
 });
