@@ -39,7 +39,7 @@ app.run(function($ionicPlatform) {
     templateUrl: 'templates/sms.html',
     controller: 'SMSController',
   })
-  
+
   .state('emergency', {
     url: '/emg',
     templateUrl: 'templates/emergency-tab.html',
@@ -113,6 +113,10 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
 
        //ignore console.log($scope.sms.message);
 
+       $scope.DclickA = function() {
+         alert('double tap to send sms');
+       }
+
       //actual sms send function
     $scope.sendSMS = function() {
         console.log($scope.sms.message);
@@ -160,7 +164,7 @@ var options = {timeout: 10000, enableHighAccuracy: true};
  $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
       var lat  = position.coords.latitude
       var long = position.coords.longitude
-      
+     
       var smsNum = smsService.getNum();
       
       $scope.sms={
@@ -171,10 +175,7 @@ var options = {timeout: 10000, enableHighAccuracy: true};
       // error
       console.log("Could not get location");
     });
-  
-  //var num = smsService.getNum();
-  //console.log("THe sms num is " + num);
-    
+
   document.addEventListener("deviceready", function() {
       console.log("Entered sms controller");
     var options = {
@@ -195,6 +196,7 @@ var options = {timeout: 10000, enableHighAccuracy: true};
           console.log($scope.sms.number);
 
     }
+<<<<<<< HEAD
 
    //actual sms send function
     $scope.sendSMS = function() {
@@ -212,6 +214,28 @@ var options = {timeout: 10000, enableHighAccuracy: true};
         });
     }
 });
+=======
+  };
+ console.log($scope.sms.number);
+ console.log($scope.sms.message);
+
+ //actual sms send function
+  $scope.sendSMS = function() {
+    alert('trigered');
+
+    $cordovaSms
+      .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
+      .then(function() {
+        console.log('Success');
+        alert('Success');
+        // Success! SMS was sent
+      }, function(error) {
+        console.log('Error');
+        alert('Error');
+        // An error occurred
+      });
+  }
+>>>>>>> 18c7e12be70ff7822628b7ad6dbc150afd0d26e5
 });
 
 
