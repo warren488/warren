@@ -56,7 +56,7 @@ app.run(function($ionicPlatform) {
   $urlRouterProvider.otherwise("/map");
 
 })
-app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaSms) {
+app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaSms, $ionicPopup, $timeout) {
     var options = {timeout: 10000, enableHighAccuracy: true};
 
 
@@ -114,6 +114,18 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
        //ignore console.log($scope.sms.message);
 
        $scope.DclickA = function() {
+         $scope.showPopup = function() {
+           $scope.data = {};
+           var myPopup = $ionicPopup.show('double tap to send sms');
+           myPopup.then(function(res) {
+             console.log('Tapped!', res);
+           });
+
+           $timeout(function() {
+             myPopup.close(); //close the popup after 3 seconds for some reason
+           }, 3000);
+         };
+
          alert('double tap to send sms');
        }
 
