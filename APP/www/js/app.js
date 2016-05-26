@@ -172,6 +172,8 @@ app.controller('SMSController', function($scope, $cordovaGeolocation, $cordovaSm
 //      message: "Put GPS coordinates here for https://www.google.com/maps/"
 //  };
 $scope.getContactList = function() {
+    console.log("This be reached");
+    
     $cordovaContacts.find({filter: ''}).then(function(result) {
         $scope.contacts = result;
     }, function(error) {
@@ -209,13 +211,13 @@ var options = {timeout: 10000, enableHighAccuracy: true};
    //console.log($scope.sms.number);
    //console.log($scope.sms.message);
 
-   $scope.setNumber = function(num) {
-      $scope.sms={
-            number: num,
-        };
-
-
-    }
+//   $scope.setNumber = function(num) {
+//      $scope.sms={
+//            number: num,
+//        };
+//
+//
+//    }
 
 
 
