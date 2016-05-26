@@ -39,7 +39,7 @@ app.run(function($ionicPlatform) {
     templateUrl: 'templates/sms.html',
     controller: 'SMSController',
   })
-  
+
   .state('emergency', {
     url: '/emg',
     templateUrl: 'templates/emergency-tab.html',
@@ -113,6 +113,10 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
 
        //ignore console.log($scope.sms.message);
 
+       $scope.DclickA = function() {
+         alert('double tap to send sms');
+       }
+
       //actual sms send function
     $scope.sendSMS = function() {
         console.log($scope.sms.message);
@@ -143,7 +147,7 @@ var options = {timeout: 10000, enableHighAccuracy: true};
  $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
       var lat  = position.coords.latitude
       var long = position.coords.longitude
-      
+
       $scope.sms={
       number: 12462415241,
       message: "Put GPS coordinates here for https://www.google.com/maps/@" + lat + "," + long + ",15z"
@@ -152,7 +156,7 @@ var options = {timeout: 10000, enableHighAccuracy: true};
       // error
       console.log("Could not get location");
     });
-    
+
   document.addEventListener("deviceready", function() {
 
   var options = {
@@ -168,6 +172,7 @@ var options = {timeout: 10000, enableHighAccuracy: true};
 
  //actual sms send function
   $scope.sendSMS = function() {
+    alert('trigered');
 
     $cordovaSms
       .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope

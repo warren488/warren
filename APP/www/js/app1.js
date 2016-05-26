@@ -27,21 +27,34 @@ app.run(function($ionicPlatform) {
 
   $stateProvider
   .state('map', {
-    url: '/',
+    url: '/map',
     templateUrl: 'templates/map.html',
-    controller: 'MapCtrl'
+    controller: 'MapCtrl',
+
+
+  })
+
+  .state('sms', {
+    url: '/sms',
+    templateUrl: 'templates/sms.html',
+    controller: 'SMSController',
   });
 
-
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/map");
 
 })
 app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
 
+
+
+
+
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+
 
     var mapOptions = {
       center: latLng,
@@ -51,6 +64,26 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
+    //Wait until the map is loaded
+    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+
+  var marker = new google.maps.Marker({
+      map: $scope.map,
+      animation: google.maps.Animation.DROP,
+      position: latLng
+  });
+
+  //
+  var contentString = '<b>Here You Are</b></br>' + latLng;
+  var infoWindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+
+  google.maps.event.addListener(marker, 'click', function () {
+      infoWindow.open($scope.map, marker);
+  });
+
+});
   }, function(error){
     console.log("Could not get location");
   });
