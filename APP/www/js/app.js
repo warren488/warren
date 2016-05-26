@@ -109,15 +109,11 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
       }, function(err) {
         // error
         console.log("Could not get location");
-        alert('Could not get location');
       });
 
        //ignore console.log($scope.sms.message);
 
        $scope.DclickA = function() {
-<<<<<<< HEAD:APP/www/js/app.js
-         //alert('double tap to send sms');
-=======
          $scope.showPopup = function() {
            $scope.data = {};
            var myPopup = $ionicPopup.show('double tap to send sms');
@@ -131,7 +127,6 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
          };
 
          alert('double tap to send sms');
->>>>>>> 3a4facfced75b3d4294307b8926447541fa1d9d3:APP/www/js/app2.js
        }
 
       //actual sms send function
@@ -155,7 +150,7 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
 /*var app = angular.module('starter', ['ionic', 'ngCordova'])*/
 app.service('smsService', function () {
     var num = 0;
-        
+
     return {
     getNum: function () {
         if (num == 0)
@@ -181,9 +176,9 @@ var options = {timeout: 10000, enableHighAccuracy: true};
  $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
       var lat  = position.coords.latitude
       var long = position.coords.longitude
-     
+
       var smsNum = smsService.getNum();
-      
+
       $scope.sms={
       number: smsNum,
       message: "HELP ME! Find me at https://www.google.com/maps/@" + lat + "," + long + ",15z"
@@ -194,100 +189,77 @@ var options = {timeout: 10000, enableHighAccuracy: true};
     });
 
   document.addEventListener("deviceready", function() {
-        console.log("Entered sms controller");
-      var options = {
-        replaceLineBreaks: false, // true to replace \n by a new line, false by default
-        android: {
-          intent: '' // send SMS with the native android SMS messaging
-            //intent: '' // send SMS without open any other app
-            //intent: 'INTENT' // send SMS inside a default SMS app
-        }
-      };
-     //console.log($scope.sms.number);
-     //console.log($scope.sms.message);
-
-     $scope.setNumber = function(num) {
-        $scope.sms={
-              number: num,
-          };
-            console.log($scope.sms.number);
-
+      console.log("Entered sms controller");
+    var options = {
+      replaceLineBreaks: false, // true to replace \n by a new line, false by default
+      android: {
+        intent: '' // send SMS with the native android SMS messaging
+          //intent: '' // send SMS without open any other app
+          //intent: 'INTENT' // send SMS inside a default SMS app
       }
+    };
+   //console.log($scope.sms.number);
+   //console.log($scope.sms.message);
+
+   $scope.setNumber = function(num) {
+      $scope.sms={
+            number: num,
+        };
 
 
-     //actual sms send function
-      $scope.sendSMS = function() {
+    }
+/*<<<<<<< HEAD
 
-        $cordovaSms
-          .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
-          .then(function() {
-            console.log('Success');
-            alert('Success');
-            // Success! SMS was sent
-          }, function(error) {
-            console.log('Error');
-            alert('Error');
-            // An error occurred
-          });
-      }
-    });
+   //actual sms send function
+    $scope.sendSMS = function() {
+
+      $cordovaSms
+        .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
+        .then(function() {
+          console.log('Success');
+          alert('Success');
+          // Success! SMS was sent
+        }, function(error) {
+          console.log('Error');
+          alert('Error');
+          // An error occurred
+        });
+    }
+});
+=======*/
+  });
+ //console.log($scope.sms.number);
+ //console.log($scope.sms.message);
+
+ //actual sms send function
+  $scope.sendSMS = function() {
+    alert('trigered');
+
+    $cordovaSms
+      .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
+      .then(function() {
+        console.log('Success');
+        alert('Success');
+        // Success! SMS was sent
+      }, function(error) {
+        console.log('Error');
+        alert('Error');
+        // An error occurred
+      });
+  }
 
 });
 
 
 //Controller to handle SMS
 app.controller('EMGController', function($scope, smsService) {
-//  $scope.sms={
-//      number: 12462415241,
-//      message: "Put GPS coordinates here for https://www.google.com/maps/"
-//  };
-//var options = {timeout: 10000, enableHighAccuracy: true};
-// $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-//      var lat  = position.coords.latitude
-//      var long = position.coords.longitude
-//      
-//      $scope.sms={
-//      number: 12462415241,
-//      message: "HELP ME! Find me at https://www.google.com/maps/@" + lat + "," + long + ",15z"
-//  };
-//    }, function(err) {
-//      // error
-//      console.log("Could not get location");
-//    });
-//    
-//  document.addEventListener("deviceready", function() {
-//
-//  var options = {
-//    replaceLineBreaks: false, // true to replace \n by a new line, false by default
-//    android: {
-//      intent: '' // send SMS with the native android SMS messaging
-//        //intent: '' // send SMS without open any other app
-//        //intent: 'INTENT' // send SMS inside a default SMS app
-//    }
- // };
- //console.log($scope.sms.number);
- //console.log($scope.sms.message);
- 
+
+
  $scope.setNumber = function(num) {
    smsService.setNum(num)
-   
-    
+
+
   }
 
-// //actual sms send function
-//  $scope.sendSMS = function() {
-//
-//    $cordovaSms
-//      .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
-//      .then(function() {
-//        console.log('Success');
-//        alert('Success');
-//        // Success! SMS was sent
-//      }, function(error) {
-//        console.log('Error');
-//        alert('Error');
-//        // An error occurred
-//      });
-//  }
-//});
+
 });
