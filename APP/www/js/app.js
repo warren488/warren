@@ -43,7 +43,7 @@ app.run(function($ionicPlatform) {
   .state('emergency', {
     url: '/emg',
     templateUrl: 'templates/emergency-tab.html',
-    //controller: 'SMSController',
+    controller: 'EMGController',
   })
 
 
@@ -104,7 +104,7 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
 
         $scope.sms={
         number: 12462415241,
-        message: "Put GPS coordinates here for https://www.google.com/maps/@" + lat + "," + long + ",15z"
+        message: "HELP ME! Find me at https://www.google.com/maps/@" + lat + "," + long + ",15z"
     };
       }, function(err) {
         // error
@@ -148,21 +148,40 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
 });
 
 /*var app = angular.module('starter', ['ionic', 'ngCordova'])*/
+app.service('smsService', function () {
+    var num = 0;
+        
+    return {
+    getNum: function () {
+        if (num == 0)
+            return 12462415241;
+        else
+            return num;
+    },
+    setNum: function (value) {
+        num = value;
+        console.log("THe num is " + num);
+    }
+    }
+});
 
 //Controller to handle SMS
-app.controller('SMSController', function($scope, $cordovaGeolocation, $cordovaSms) {
+app.controller('SMSController', function($scope, $cordovaGeolocation, $cordovaSms, smsService) {
 //  $scope.sms={
 //      number: 12462415241,
 //      message: "Put GPS coordinates here for https://www.google.com/maps/"
 //  };
+
 var options = {timeout: 10000, enableHighAccuracy: true};
  $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
       var lat  = position.coords.latitude
       var long = position.coords.longitude
-
+     
+      var smsNum = smsService.getNum();
+      
       $scope.sms={
-      number: 12462415241,
-      message: "Put GPS coordinates here for https://www.google.com/maps/@" + lat + "," + long + ",15z"
+      number: smsNum,
+      message: "HELP ME! Find me at https://www.google.com/maps/@" + lat + "," + long + ",15z"
   };
     }, function(err) {
       // error
@@ -170,14 +189,44 @@ var options = {timeout: 10000, enableHighAccuracy: true};
     });
 
   document.addEventListener("deviceready", function() {
+      console.log("Entered sms controller");
+    var options = {
+      replaceLineBreaks: false, // true to replace \n by a new line, false by default
+      android: {
+        intent: '' // send SMS with the native android SMS messaging
+          //intent: '' // send SMS without open any other app
+          //intent: 'INTENT' // send SMS inside a default SMS app
+      }
+    };
+   //console.log($scope.sms.number);
+   //console.log($scope.sms.message);
 
-  var options = {
-    replaceLineBreaks: false, // true to replace \n by a new line, false by default
-    android: {
-      intent: '' // send SMS with the native android SMS messaging
-        //intent: '' // send SMS without open any other app
-        //intent: 'INTENT' // send SMS inside a default SMS app
+   $scope.setNumber = function(num) {
+      $scope.sms={
+            number: num,
+        };
+          console.log($scope.sms.number);
+
     }
+<<<<<<< HEAD
+
+   //actual sms send function
+    $scope.sendSMS = function() {
+
+      $cordovaSms
+        .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
+        .then(function() {
+          console.log('Success');
+          alert('Success');
+          // Success! SMS was sent
+        }, function(error) {
+          console.log('Error');
+          alert('Error');
+          // An error occurred
+        });
+    }
+});
+=======
   };
  console.log($scope.sms.number);
  console.log($scope.sms.message);
@@ -198,5 +247,63 @@ var options = {timeout: 10000, enableHighAccuracy: true};
         // An error occurred
       });
   }
+>>>>>>> 18c7e12be70ff7822628b7ad6dbc150afd0d26e5
 });
+
+
+//Controller to handle SMS
+app.controller('EMGController', function($scope, smsService) {
+//  $scope.sms={
+//      number: 12462415241,
+//      message: "Put GPS coordinates here for https://www.google.com/maps/"
+//  };
+//var options = {timeout: 10000, enableHighAccuracy: true};
+// $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+//      var lat  = position.coords.latitude
+//      var long = position.coords.longitude
+//      
+//      $scope.sms={
+//      number: 12462415241,
+//      message: "HELP ME! Find me at https://www.google.com/maps/@" + lat + "," + long + ",15z"
+//  };
+//    }, function(err) {
+//      // error
+//      console.log("Could not get location");
+//    });
+//    
+//  document.addEventListener("deviceready", function() {
+//
+//  var options = {
+//    replaceLineBreaks: false, // true to replace \n by a new line, false by default
+//    android: {
+//      intent: '' // send SMS with the native android SMS messaging
+//        //intent: '' // send SMS without open any other app
+//        //intent: 'INTENT' // send SMS inside a default SMS app
+//    }
+ // };
+ //console.log($scope.sms.number);
+ //console.log($scope.sms.message);
+ 
+ $scope.setNumber = function(num) {
+   smsService.setNum(num)
+   
+    
+  }
+
+// //actual sms send function
+//  $scope.sendSMS = function() {
+//
+//    $cordovaSms
+//      .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
+//      .then(function() {
+//        console.log('Success');
+//        alert('Success');
+//        // Success! SMS was sent
+//      }, function(error) {
+//        console.log('Error');
+//        alert('Error');
+//        // An error occurred
+//      });
+//  }
+//});
 });
