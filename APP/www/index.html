@@ -9,6 +9,8 @@
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
 
+    <link href="../lib/ionicons/css/ionicons.css" rel = "stylesheet">
+
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -30,9 +32,19 @@
 
 
   <ion-pane>
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Ionic Maps</h1>
+    <ion-header-bar class ="bar-stable">
+      <div class="bar bar-header">
+        <button class="button button-icon icon ion-arrow-left-b "></button>
+            <h1 class="title">Ionic Maps</h1>
+        <button class="button button-icon icon ion-gear-b"></button>
+      </div>
+
     </ion-header-bar>
+
+
+    <!--<ion-header-bar class="bar-stable">
+      <h1 class="title">Ionic Maps</h1>
+    </ion-header-bar> -->
     <ion-nav-view></ion-nav-view>
   </ion-pane>
 
