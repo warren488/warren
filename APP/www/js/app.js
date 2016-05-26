@@ -166,11 +166,18 @@ app.service('smsService', function () {
 });
 
 //Controller to handle SMS
-app.controller('SMSController', function($scope, $cordovaGeolocation, $cordovaSms, smsService) {
+app.controller('SMSController', function($scope, $cordovaGeolocation, $cordovaSms, $cordovaContacts, smsService) {
 //  $scope.sms={
 //      number: 12462415241,
 //      message: "Put GPS coordinates here for https://www.google.com/maps/"
 //  };
+$scope.getContactList = function() {
+    $cordovaContacts.find({filter: ''}).then(function(result) {
+        $scope.contacts = result;
+    }, function(error) {
+        console.log("ERROR: " + error);
+    });
+}
 
 var options = {timeout: 10000, enableHighAccuracy: true};
  $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
