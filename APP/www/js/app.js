@@ -160,7 +160,7 @@ app.service('smsService', function () {
     },
     setNum: function (value) {
         num = value;
-        console.log("THe num is " + num);
+        console.log("The num is " + num);
     }
     }
 });
@@ -174,8 +174,8 @@ app.controller('SMSController', function($scope, $cordovaGeolocation, $cordovaSm
 
 var options = {timeout: 10000, enableHighAccuracy: true};
  $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-      var lat  = position.coords.latitude
-      var long = position.coords.longitude
+      var lat  = position.coords.latitude;
+      var long = position.coords.longitude;
 
       var smsNum = smsService.getNum();
 
@@ -183,6 +183,7 @@ var options = {timeout: 10000, enableHighAccuracy: true};
       number: smsNum,
       message: "HELP ME! Find me at https://www.google.com/maps/@" + lat + "," + long + ",15z"
   };
+    $scope.msg = $scope.sms.message;
     }, function(err) {
       // error
       console.log("Could not get location");
@@ -238,23 +239,29 @@ var options = {timeout: 10000, enableHighAccuracy: true};
   $scope.sendSMS = function() {
      
     try { 
+        
         if($scope.sms.number == null) { 
-            throw "Empty.";
+            throw "is Empty.";
         } 
         else if(isNaN($scope.sms.number)) { 
-            throw "not a number.";
+            throw "is not a number.";
         }
         else if($scope.sms.number.toString().length > 15){
-            throw "too long to be a registered number.";
+            throw "is too long to be a registered number.";
         }
         
         else if($scope.sms.number.toString().length > 3 && $scope.sms.number.toString().length < 11){
-            throw "incomplete. Please input full 11 digit number including area code";
+            throw "is incomplete. Please input full 11 digit number including area code";
         }
                     
         else if($scope.sms.number.toString().length < 3) { 
-            throw "too short to be a registered number.";
+            throw "is too short to be a registered number.";
         }
+        
+        else if($scope.sms.message.length < 1){
+            throw "message is empty. Resetting to default message.";
+        }
+        
         else
         {
             $cordovaSms
@@ -271,14 +278,14 @@ var options = {timeout: 10000, enableHighAccuracy: true};
         }
     }
     catch(err) {
-        alert( "Input is " + err);
+        alert( "Input " + err);
     }
     
     finally {
         var smsNum = smsService.getNum();
         $scope.sms={
             number: smsNum,
-            message: $scope.sms.message
+            message: $scope.msg
         };
     }
 
