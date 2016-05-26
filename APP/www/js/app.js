@@ -109,12 +109,13 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
       }, function(err) {
         // error
         console.log("Could not get location");
+        alert('Could not get location');
       });
 
        //ignore console.log($scope.sms.message);
 
        $scope.DclickA = function() {
-         alert('double tap to send sms');
+         //alert('double tap to send sms');
        }
 
       //actual sms send function
@@ -177,65 +178,44 @@ var options = {timeout: 10000, enableHighAccuracy: true};
     });
 
   document.addEventListener("deviceready", function() {
-      console.log("Entered sms controller");
-    var options = {
-      replaceLineBreaks: false, // true to replace \n by a new line, false by default
-      android: {
-        intent: '' // send SMS with the native android SMS messaging
-          //intent: '' // send SMS without open any other app
-          //intent: 'INTENT' // send SMS inside a default SMS app
+        console.log("Entered sms controller");
+      var options = {
+        replaceLineBreaks: false, // true to replace \n by a new line, false by default
+        android: {
+          intent: '' // send SMS with the native android SMS messaging
+            //intent: '' // send SMS without open any other app
+            //intent: 'INTENT' // send SMS inside a default SMS app
+        }
+      };
+     //console.log($scope.sms.number);
+     //console.log($scope.sms.message);
+
+     $scope.setNumber = function(num) {
+        $scope.sms={
+              number: num,
+          };
+            console.log($scope.sms.number);
+
       }
-    };
-   //console.log($scope.sms.number);
-   //console.log($scope.sms.message);
 
-   $scope.setNumber = function(num) {
-      $scope.sms={
-            number: num,
-        };
-          console.log($scope.sms.number);
 
-    }
-<<<<<<< HEAD
+     //actual sms send function
+      $scope.sendSMS = function() {
 
-   //actual sms send function
-    $scope.sendSMS = function() {
+        $cordovaSms
+          .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
+          .then(function() {
+            console.log('Success');
+            alert('Success');
+            // Success! SMS was sent
+          }, function(error) {
+            console.log('Error');
+            alert('Error');
+            // An error occurred
+          });
+      }
+    });
 
-      $cordovaSms
-        .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
-        .then(function() {
-          console.log('Success');
-          alert('Success');
-          // Success! SMS was sent
-        }, function(error) {
-          console.log('Error');
-          alert('Error');
-          // An error occurred
-        });
-    }
-});
-=======
-  };
- console.log($scope.sms.number);
- console.log($scope.sms.message);
-
- //actual sms send function
-  $scope.sendSMS = function() {
-    alert('trigered');
-
-    $cordovaSms
-      .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
-      .then(function() {
-        console.log('Success');
-        alert('Success');
-        // Success! SMS was sent
-      }, function(error) {
-        console.log('Error');
-        alert('Error');
-        // An error occurred
-      });
-  }
->>>>>>> 18c7e12be70ff7822628b7ad6dbc150afd0d26e5
 });
 
 
