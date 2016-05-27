@@ -82,7 +82,28 @@ app.run(function($ionicPlatform) {
 
     //controller: 'SMSController',
 
+  })
+
+  .state('settings', {
+
+    url: '/set',
+
+    templateUrl: 'templates/settings.html',
+
+    //controller: 'SMSController',
+
+  })
+
+  .state('alert', {
+
+    url: '/alert',
+
+    templateUrl: 'templates/alertsettings.html',
+
+    //controller: 'SMSController',
+
   });
+
 
   $urlRouterProvider.otherwise("/map");
 
