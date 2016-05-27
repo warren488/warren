@@ -147,7 +147,7 @@ app.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
 
 });
 
-/*var app = angular.module('starter', ['ionic', 'ngCordova'])*/
+
 app.service('smsService', function () {
     var num = 0;
 
@@ -208,39 +208,9 @@ var options = {timeout: 10000, enableHighAccuracy: true};
           //intent: 'INTENT' // send SMS inside a default SMS app
       }
     };
-   //console.log($scope.sms.number);
-   //console.log($scope.sms.message);
-
-//   $scope.setNumber = function(num) {
-//      $scope.sms={
-//            number: num,
-//        };
-//
-//
-//    }
-
-
-
-/*<<<<<<< HEAD
-   //actual sms send function
-    $scope.sendSMS = function() {
-      $cordovaSms
-        .send($scope.sms.number, $scope.sms.message, options) //take number and message from scope
-        .then(function() {
-          console.log('Success');
-          alert('Success');
-          // Success! SMS was sent
-        }, function(error) {
-          console.log('Error');
-          alert('Error');
-          // An error occurred
-        });
-    }
-});
-=======*/
+   
   });
- //console.log($scope.sms.number);
- //console.log($scope.sms.message);
+ 
 
  //actual sms send function
   $scope.sendSMS = function() {
