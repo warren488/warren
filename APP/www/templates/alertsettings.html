@@ -1,0 +1,49 @@
+<ion-view title="Settings">
+  <ion-content class="has-header">
+
+<ul class="list">
+
+  <label class="item item-input item-label">
+   <span class="input-label"><div class='wrapper'>
+<form id='nameForm'>
+<div class='form-uname'>
+    <lable id='nameLable' for='nameField'>Create a custom emergency message:</lable>
+    <input id='nameField' type='text' maxlength='25' ng-model="sms.message"></input>
+</div>
+<div class='form-sub'>
+    <button id='subButton' class="button button-energized alert">Save your message!</button>
+</div>
+</form>
+
+<div>
+    <p id='result'></p></div>
+</div></span>
+   <input type="text" ng-model="hoursPerWeek" value="37.5">
+</label>
+
+</ul>
+
+<ul class="list">
+
+  <label class="item item-input item-label">
+   <span class="input-label"><div class='wrapper'>
+<form id='nameForm'>
+<div class='form-uname'>
+    <lable id='nameLable' for='nameField'>Please enter the emergency number:</lable>
+    <input id='nameField' type='text' maxlength='25' value="{{ testVar }}" ng-model="sms.number"></input>
+</div>
+<div class='form-sub'>
+    <button id='subButton' class="button button-energized alert">Save your emergency number!</button>
+</div>
+</form>
+
+<div>
+    <p id='result'></p></div>
+</div></span>
+   <input type="text" ng-model="hoursPerWeek" value="37.5">
+</label>
+
+</ul>
+
+  </ion-content class>
+</ion-view title>
