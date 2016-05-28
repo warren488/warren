@@ -10,7 +10,7 @@ Shamar Yarde – Programmer – Phone Number: 264-3194
 
 Name of App
 
-SMS Emergency Assistance App
+Emergency Assistant
 
 Purpose 
 
