@@ -296,7 +296,7 @@ $scope.getContactList = function() {
     $cordovaContacts.find({filter: ''}).then(function(result) {
 
         $scope.contacts = result;
-
+        console.log(JSON.stringify(allContacts));
     }, function(error) {
 
         console.log("ERROR: " + error);
