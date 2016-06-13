@@ -289,20 +289,25 @@ app.controller('SMSController', function($scope, $cordovaGeolocation, $cordovaSm
 
 $scope.getContactList = function() {
 
-    console.log("This be reached");
+   alert("This be reached");
 
+    try
+    {
 
+        $cordovaContacts.find({filter: ''}).then(function(result) {
 
-    $cordovaContacts.find({filter: ''}).then(function(result) {
+            $scope.contacts = result;
+            //alert(JSON.stringify($scope.contacts));
+        }, function(error) {
 
-        $scope.contacts = result;
-        console.log(JSON.stringify(allContacts));
-    }, function(error) {
-
-        console.log("ERROR: " + error);
-
-    });
-
+            console.log("ERROR: " + error);
+            //alert("In function: " + error);
+        });
+    }
+    catch(error)
+    {
+        alert("In catch " + error);
+    }
 }
 
 var options = {timeout: 10000, enableHighAccuracy: true};
